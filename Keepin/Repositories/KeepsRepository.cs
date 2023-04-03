@@ -35,7 +35,7 @@ public class KeepsRepository
   JOIN accounts a ON k.creatorId = a.id
   GROUP BY k.id, a.id;
   ";
-    Keep keep = _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+    Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
     {
       keep.Creator = account;
       return keep;
@@ -57,7 +57,7 @@ public class KeepsRepository
   JOIN accounts a ON k.creatorId = a.id
   GROUP BY k.id, a.id;
   ";
-    List<Keep> keeps = _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+    List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
     {
       keep.Creator = account;
       return keep;

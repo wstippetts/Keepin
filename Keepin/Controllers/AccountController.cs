@@ -15,11 +15,11 @@ public class AccountController : ControllerBase
 
   [HttpGet]
   [Authorize]
-  public async Task<ActionResult<Account>> Get()
+  public async Task<ActionResult<Profile>> Get()
   {
     try
     {
-      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth0Provider.GetUserInfoAsync<Profile>(HttpContext);
       return Ok(_accountService.GetOrCreateProfile(userInfo));
     }
     catch (Exception e)

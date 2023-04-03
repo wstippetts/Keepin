@@ -17,7 +17,7 @@ public class KeepsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
       _keepsService.RemoveKeep(id, userInfo.Id);
       return Ok("Successfully Deleted");
     }
@@ -34,7 +34,7 @@ public class KeepsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
       newKeep.CreatorId = userInfo.Id;
       Keep created = _keepsService.Create(newKeep);
       created.Creator = userInfo;
@@ -51,7 +51,7 @@ public class KeepsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
       List<Keep> keeps = _keepsService.GetKeeps(userInfo?.Id);
       return Ok(keeps);
     }
@@ -66,7 +66,7 @@ public class KeepsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
       Keep keep = _keepsService.GetOneKeep(id, userInfo?.Id);
       return Ok(keep);
     }
@@ -82,7 +82,7 @@ public class KeepsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
       keepData.CreatorId = userInfo.Id;
       keepData.Id = id;
       Keep keep = _keepsService.EditKeep(keepData, userInfo.Id);

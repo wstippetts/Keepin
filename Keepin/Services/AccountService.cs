@@ -9,14 +9,14 @@ public class AccountService
     _repo = repo;
   }
 
-  internal Account GetProfileByEmail(string email)
+  internal Profile GetProfileByEmail(string email)
   {
     return _repo.GetByEmail(email);
   }
 
-  internal Account GetOrCreateProfile(Account userInfo)
+  internal Profile GetOrCreateProfile(Profile userInfo)
   {
-    Account profile = _repo.GetById(userInfo.Id);
+    Profile profile = _repo.GetById(userInfo.Id);
     if (profile == null)
     {
       return _repo.Create(userInfo);
@@ -24,9 +24,9 @@ public class AccountService
     return profile;
   }
 
-  internal Account Edit(Account editData, string userEmail)
+  internal Profile Edit(Profile editData, string userEmail)
   {
-    Account original = GetProfileByEmail(userEmail);
+    Profile original = GetProfileByEmail(userEmail);
     original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
     return _repo.Edit(original);

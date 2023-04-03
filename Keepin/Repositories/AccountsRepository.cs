@@ -9,19 +9,19 @@ public class AccountsRepository
     _db = db;
   }
 
-  internal Account GetByEmail(string userEmail)
+  internal Profile GetByEmail(string userEmail)
   {
     string sql = "SELECT * FROM accounts WHERE email = @userEmail";
-    return _db.QueryFirstOrDefault<Account>(sql, new { userEmail });
+    return _db.QueryFirstOrDefault<Profile>(sql, new { userEmail });
   }
 
-  internal Account GetById(string id)
+  internal Profile GetById(string id)
   {
     string sql = "SELECT * FROM accounts WHERE id = @id";
-    return _db.QueryFirstOrDefault<Account>(sql, new { id });
+    return _db.QueryFirstOrDefault<Profile>(sql, new { id });
   }
 
-  internal Account Create(Account newAccount)
+  internal Profile Create(Profile newAccount)
   {
     string sql = @"
             INSERT INTO accounts
@@ -32,7 +32,7 @@ public class AccountsRepository
     return newAccount;
   }
 
-  internal Account Edit(Account update)
+  internal Profile Edit(Profile update)
   {
     string sql = @"
             UPDATE accounts

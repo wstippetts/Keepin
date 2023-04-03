@@ -11,6 +11,23 @@ public class KeepsController : ControllerBase
     _auth = auth;
   }
 
+  [HttpDelete("{id}")]
+  [Authorize]
+  public async Task<ActionResult<string>> RemoveKeep(int id)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      _keepsService.RemoveKeep(id, userInfo.Id);
+      return Ok("Successfully Deleted");
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+
   [HttpPost]
   [Authorize]
   public async Task<ActionResult<Keep>> Create([FromBody] Keep newKeep)
@@ -58,4 +75,24 @@ public class KeepsController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  [HttpPut("{id}")]
+  [Authorize]
+  public async Task<ActionResult<Keep>> EditKeep(int id, [FromBody] Keep keepData)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      keepData.CreatorId = userInfo.Id;
+      keepData.Id = id;
+      Keep keep = _keepsService.EditKeep(keepData, userInfo.Id);
+      return Ok(keep);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+
 }

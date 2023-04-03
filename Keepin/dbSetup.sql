@@ -11,18 +11,19 @@ CREATE TABLE
 CREATE TABLE
     keeps(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        creatorId VARCHAR(255) NOT NULL,
         name VARCHAR(255) NOT NULL,
         description VARCHAR(1000) NOT NULL DEFAULT 'Empty',
         img VARCHAR(255) NOT NULL DEFAULT 'https://images.unsplash.com/photo-1511914678378-2906b1f69dcf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=400&w=687&q=80',
         views INT NOT NULL DEFAULT 0,
-        creatorId VARCHAR(255) NOT NULL,
-        kept VARCHAR(255) NOT NULL,
-        Foreign Key (kept) REFERENCES vaultKeep(id)
+        kept INT NOT NULL DEFAULT 0,
+        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8mb4 COMMENT '';
 
 CREATE TABLE
     IF NOT EXISTS vaults(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        creatorId VARCHAR(255) NOT NULL,
         name VARCHAR(255) NOT NULL,
         description VARCHAR(1000) NOT NULL DEFAULT 'Empty',
         img VARCHAR(255) NOT NULL DEFAULT 'https://images.unsplash.com/photo-1511914678378-2906b1f69dcf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=400&w=687&q=80',
@@ -36,7 +37,7 @@ CREATE TABLE
         creatorId VARCHAR(255) NOT NULL,
         vaultId int NOT NULL,
         keepId int NOT NULL,
-        Foreign Key (vaultId) REFERENCES vaults(id),
-        Foreign Key (keeptId) REFERENCES keeps(id),
+        Foreign Key (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
+        Foreign Key (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
         FOREIGN KEY(creatorId) REFERENCES accounts (id) ON DELETE CASCADE
     ) default charset utf8mb4 COMMENT '';

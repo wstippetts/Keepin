@@ -47,12 +47,11 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<ActionResult<List<Keep>>> GetKeeps()
+  public ActionResult<List<Keep>> GetKeeps()
   {
     try
     {
-      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
-      List<Keep> keeps = _keepsService.GetKeeps(userInfo?.Id);
+      List<Keep> keeps = _keepsService.GetKeeps();
       return Ok(keeps);
     }
     catch (Exception e)
@@ -62,12 +61,11 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet("{id}")]
-  public async Task<ActionResult<Keep>> GetOneKeep(int id)
+  public ActionResult<Keep> GetOneKeep(int id)
   {
     try
     {
-      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
-      Keep keep = _keepsService.GetOneKeep(id, userInfo?.Id);
+      Keep keep = _keepsService.GetOneKeep(id);
       return Ok(keep);
     }
     catch (Exception e)
@@ -83,7 +81,6 @@ public class KeepsController : ControllerBase
     try
     {
       Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
-      keepData.CreatorId = userInfo.Id;
       keepData.Id = id;
       Keep keep = _keepsService.EditKeep(keepData, userInfo.Id);
       return Ok(keep);

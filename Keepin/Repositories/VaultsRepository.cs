@@ -52,6 +52,24 @@ public class VaultsRepository
     return _db.QueryFirstOrDefault<Vault>(sql, found);
   }
 
+  internal List<VKeep> GetKeepsByVaultId(int vaultId)
+  {
+    string sql = @"
+    SELECT
+    k.*,
+    vk.id as vaultKeepId,
+    a.*
+    FROM vaultkeeps vk
+    JOIN keeps k ON vk.keepId = k.id
+    JOIN accounts a ON k.creatorId = a.id
+    WHERE vaultId = @vaultId;";
+    return _db.Query<VKeep, Profile, VKeep>(sql, (vkeep, account) =>
+    {
+      vkeep.Creator = account;
+      return vkeep;
+    }, new { vaultId }).ToList();
+  }
+
   internal int RemoveVault(int id)
   {
     string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1;";

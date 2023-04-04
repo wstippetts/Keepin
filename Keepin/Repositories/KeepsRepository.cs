@@ -12,12 +12,13 @@ public class KeepsRepository
   {
     string sql = @"
         INSERT INTO keeps
-        (name, description, img, creatorId)
+        (name, description, img, creatorId, kept, views)
         VALUES
-        (@name, @description, @img, @creatorId);
+        (@name, @description, @img, @creatorId, 0, 0);
         SELECT LAST_INSERT_ID();
         ";
     int id = _db.ExecuteScalar<int>(sql, keepData);
+    keepData.Id = id;
     return keepData;
   }
 
@@ -26,20 +27,26 @@ public class KeepsRepository
     string sql = @"
   SELECT
   k.*,
-  COUNT(v.id) AS Views,
-  COUNT(ks.id) AS Kept,
   a.*
   FROM keeps k
-  LEFT JOIN views v ON k.id = v.keepId
-  LEFT JOIN keeps ks ON k.id = ks.keepId
   JOIN accounts a ON k.creatorId = a.id
-  GROUP BY k.id, a.id;
+  WHERE k.id = @id;
   ";
     Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
     {
       keep.Creator = account;
+      keep.CreatorId = account.Id;
       return keep;
-    }).FirstOrDefault();
+    }, new { id }).FirstOrDefault();
+    if (keep == null) throw new Exception("Invalid Id");
+    string sql2 = @"
+    UPDATE keeps
+    SET
+    views = views + 1
+    WHERE id = @id;
+    ";
+    _db.Execute(sql2, new { id });
+    keep.Views++;
     return keep;
   }
 
@@ -48,18 +55,14 @@ public class KeepsRepository
     string sql = @"
   SELECT
   k.*,
-  COUNT(v.id) AS views,
-  COUNT(ks.id) AS Kept,
   a.*
   FROM keeps k
-  LEFT JOIN views v ON k.id = v.keepId
-  LEFT JOIN keeps ks ON k.id = ks.keepId
-  JOIN accounts a ON k.creatorId = a.id
-  GROUP BY k.id, a.id;
+  JOIN accounts a ON k.creatorId = a.id;
   ";
     List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
     {
       keep.Creator = account;
+      keep.CreatorId = account.Id;
       return keep;
     }).ToList();
     return keeps;
@@ -68,15 +71,13 @@ public class KeepsRepository
   internal int UpdateKeep(Keep keepData)
   {
     string sql = @"
-        UPDATE keeps
-        SET
-            name = @Name,
-            description = @Description,
-            img = @Img,
-            views = @Views,
-            kept = @Kept
-        WHERE id = @Id;
-        ";
+    UPDATE keeps
+    SET
+    name = @Name,
+    description = @Description,
+    img = @Img
+    WHERE id = @Id;
+    ";
     int rows = _db.Execute(sql, keepData);
     return rows;
   }

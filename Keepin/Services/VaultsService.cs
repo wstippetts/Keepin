@@ -18,10 +18,8 @@ public class VaultsService
   internal Vault Edit(Vault editVault)
   {
     Vault found = _repo.GetById(editVault.Id);
-    if (found == null)
-    {
-      throw new Exception("Invalid Id");
-    }
+    if (found == null) throw new Exception("Invalid Id");
+    if (found.CreatorId != editVault.CreatorId) throw new Exception("You are not the creator of this vault");
     found.Name = editVault.Name != null ? editVault.Name : found.Name;
     found.Description = editVault.Description != null ? editVault.Description : found.Description;
     found.Img = editVault.Img != null ? editVault.Img : found.Img;
@@ -41,6 +39,12 @@ public class VaultsService
       throw new Exception("This is a private vault");
     }
     return found;
+  }
+
+  internal List<VKeep> GetKeepsByVaultId(int vaultId, Profile userInfo)
+  {
+    this.GetById(vaultId, userInfo?.Id);
+    return _repo.GetKeepsByVaultId(vaultId);
   }
 
   internal string RemoveVault(int id, string userId)

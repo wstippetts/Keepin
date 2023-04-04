@@ -22,35 +22,26 @@ public class KeepsService
 
   internal Keep EditKeep(Keep keepData, string userId)
   {
-    if (keepData.CreatorId != userId) throw new Exception("You are not the creator of this keep");
     Keep keep = _repo.GetOneKeep(keepData.Id);
-    keep.Name = keepData.Name;
-    keep.Description = keepData.Description;
-    keep.Img = keepData.Img;
-    keep.Views = keepData.Views;
-    keep.Kept = keepData.Kept;
-    keep.CreatorId = keepData.CreatorId;
+    if (keep.CreatorId != userId) throw new Exception("You are not the creator of this keep");
+    keep.Name = keepData.Name != null ? keepData.Name : keep.Name;
+    keep.Description = keepData.Description != null ? keepData.Description : keep.Description;
+    keep.Img = keepData.Img != null ? keepData.Img : keep.Img;
     _repo.UpdateKeep(keep);
     return keep;
   }
 
-  internal List<Keep> GetKeeps(string id)
+  internal List<Keep> GetKeeps()
   {
     List<Keep> allKeeps = _repo.GetKeeps();
     // List<Keep> filteredKeeps = allKeeps.FindAll(k => k.CreatorId == id);
     return allKeeps;
   }
 
-  internal Keep GetOneKeep(int id, string userId)
+  internal Keep GetOneKeep(int id)
   {
     Keep keep = _repo.GetOneKeep(id);
-    if (keep == null) throw new Exception($"no keep with id: {id}");
-    if (keep.CreatorId != userId) throw new Exception("You are not the creator of this keep");
-    {
-      if (keep.CreatorId != userId)
-        keep.Views++;
-      // _repo.UpdateKeep(keep);
-    }
+
     return keep;
   }
 }

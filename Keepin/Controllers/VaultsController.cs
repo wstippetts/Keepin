@@ -7,6 +7,7 @@ public class VaultsController : ControllerBase
   private readonly VaultsService _vaultsService;
   private readonly Auth0Provider _auth;
 
+
   public VaultsController(VaultsService vaultsService, Auth0Provider auth)
   {
     _vaultsService = vaultsService;
@@ -73,6 +74,23 @@ public class VaultsController : ControllerBase
       editVault.CreatorId = userInfo.Id;
       Vault edited = _vaultsService.Edit(editVault);
       return Ok(edited);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  // SECTION VK area...............................................
+
+  [HttpGet("{vaultId}/keeps")]
+  public async Task<ActionResult<List<VKeep>>> GetKeepsByVaultId(int vaultId)
+  {
+    try
+    {
+      Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
+      List<VKeep> keeps = _vaultsService.GetKeepsByVaultId(vaultId, userInfo);
+      return Ok(keeps);
     }
     catch (Exception e)
     {

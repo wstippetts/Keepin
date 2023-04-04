@@ -32,7 +32,7 @@ CREATE TABLE
     ) default charset utf8mb4 COMMENT '';
 
 CREATE TABLE
-    IF NOT EXISTS vaultKeep(
+    IF NOT EXISTS vaultkeeps(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         creatorId VARCHAR(255) NOT NULL,
         vaultId int NOT NULL,

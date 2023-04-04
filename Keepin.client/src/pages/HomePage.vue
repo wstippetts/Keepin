@@ -1,44 +1,51 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <section class="bricks">
+    <div v-for="k in keeps">
+      <KeepsCard :keep="k" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+import { computed, onMounted } from "vue";
+import { logger } from "../utils/Logger.js";
+import { keepsService } from "../services/keepsService.js";
+import Pop from "../utils/Pop.js";
+import { AppState } from "../AppState.js";
+
 export default {
   setup() {
-    return {}
+
+
+    onMounted(() => {
+      getKeeps()
+    })
+
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps()
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error)
+      }
+    }
+    return {
+      keeps: computed(() => AppState.keeps)
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
+$gap: .5em;
 
-  .home-card {
-    width: 50vw;
+.bricks {
+  columns: 300px;
+  column-gap: $gap;
 
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
+  &>div {
+    margin-top: $gap;
+    display: inline-block;
   }
 }
 </style>

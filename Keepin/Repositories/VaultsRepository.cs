@@ -70,6 +70,22 @@ public class VaultsRepository
     }, new { vaultId }).ToList();
   }
 
+  internal List<Vault> GetVaultsByProfileId(string id)
+  {
+    string sql = @"
+    SELECT
+    vaults.*,
+    acct.*
+    FROM vaults
+    JOIN accounts acct ON vaults.creatorId = acct.id
+    WHERE vaults.creatorId = @id";
+    return _db.Query<Vault, Profile, Vault>(sql, (vaults, prof) =>
+    {
+      vaults.Creator = prof;
+      return vaults;
+    }, new { id }).ToList();
+  }
+
   internal int RemoveVault(int id)
   {
     string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1;";

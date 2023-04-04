@@ -47,6 +47,14 @@ public class VaultsService
     return _repo.GetKeepsByVaultId(vaultId);
   }
 
+  internal List<Vault> GetVaultsByProfileId(Profile userInfo)
+  {
+    List<Vault> vaults = _repo.GetVaultsByProfileId(userInfo?.Id);
+    if (vaults == null) throw new Exception("Invalid Id");
+    List<Vault> vaultsToReturn = vaults.FindAll(v => v.IsPrivate == false || v.CreatorId == userInfo?.Id);
+    return vaultsToReturn;
+  }
+
   internal string RemoveVault(int id, string userId)
   {
     Vault found = this.GetById(id, userId);

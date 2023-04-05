@@ -23,18 +23,20 @@ import { logger } from "../utils/Logger.js"
 import { keepsService } from "../services/keepsService.js"
 import { vaultsService } from "../services/VaultsService.js"
 import Pop from "../utils/Pop.js"
+import { useRoute } from "vue-router"
 export default {
   setup() {
-    // onMounted(() => {
-    watchEffect(() => {
-      if (AppState.account.id) {
-        getVaultsByProfileId()
-        getKeepsByProfileId()
-      }
+    const route = useRoute()
+    onMounted(() => {
+      // watchEffect(() => {
+      // if (AppState.account.id) {
+      getVaultsByProfileId()
+      getKeepsByProfileId()
+      // }
     })
     async function getKeepsByProfileId() {
       try {
-        const userId = AppState.account.id
+        const userId = route.params.profileId
         await keepsService.getKeepsByProfileId(userId)
       } catch (error) {
         logger.error(error)
@@ -44,7 +46,7 @@ export default {
 
     async function getVaultsByProfileId() {
       try {
-        const userId = AppState.account.id
+        const userId = route.params.profileId
         await vaultsService.getVaultsByProfileId(userId)
       } catch (error) {
         logger.error(error)
@@ -53,7 +55,7 @@ export default {
     }
     return {
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
+      vaults: computed(() => AppState.vaults.find(v => v.isPrivate != true)),
       keeps: computed(() => AppState.keeps),
 
 

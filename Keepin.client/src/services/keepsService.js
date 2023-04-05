@@ -9,5 +9,13 @@ class KeepsService {
     AppState.keeps = res.data
   }
 
+  async getKeepsByProfileId(userId) {
+    AppState.keeps = null
+    const res = await api.get('api/keeps')
+    const keeps = res.data.filter(k => k.creatorId === userId)
+    logger.log('[I got da KEEPS- keep service get keeps by profile id]', res.data)
+    AppState.keeps = keeps
+  }
+
 }
 export const keepsService = new KeepsService()

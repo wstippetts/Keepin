@@ -1,19 +1,26 @@
 <template>
   <div class="component keepCard">
-    <img class="img-fluid rounded" :src="keep.img" alt="">
+    <img @click="setActive(keep)" class="img-fluid rounded" :src="keep?.img" alt="">
     <div class="d-flex justify-content-between">
-      <h4 class="p-2 text-dark text-start textBox">{{ keep.name }}</h4>
-      <img class="profPic m-1" :src="keep.creator.picture" alt="">
+      <h4 class="p-2 text-dark text-start textBox">{{ keep?.name }}</h4>
+      <img class="profPic m-1" :src="keep?.creator.picture" alt="">
     </div>
   </div>
 </template>
 
 
 <script>
+import { AppState } from "../AppState.js";
+
 export default {
   props: { keep: { type: Object, required: true } },
   setup() {
-    return {}
+    return {
+      setActive(keep) {
+        AppState.activeKeep = keep
+
+      }
+    }
   }
 }
 </script>

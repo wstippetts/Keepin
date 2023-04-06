@@ -13,7 +13,7 @@
 
 
     <!-- TODO make this login button a create keep and vault button -->
-    <button class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0" @click="login">
+    <!-- <button class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0" @click="login">
       Login
     </button>
     <div class="dropdown dropright my-2 my-lg-0">
@@ -38,7 +38,7 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
   </span>
 </template>
 

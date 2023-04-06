@@ -7,8 +7,14 @@
       <div class="">
         <img alt="Keepr-logo" src="../assets/img/Keepr-logo.png" height="45" />
       </div>
-      <CreateDropDown />
     </router-link>
+    <button v-if="account.id" data-bs-toggle="modal" data-bs-target="#newKeep" class="btn btn-secondary mdi mdi-plus m-2">
+      Create Keep
+    </button>
+    <button v-if="account.id" data-bs-toggle="modal" data-bs-target="#newVault"
+      class=" btn btn-outline-secondary mdi mdi-plus m-2">
+      Create Vault
+    </button>
     <!-- <CreateDropdown class="d-flex justify-content-between" /> -->
     <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,10 +38,17 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { AppState } from "../AppState.js";
 import Login from './Login.vue'
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account),
+
+    }
   },
   components: { Login }
 }

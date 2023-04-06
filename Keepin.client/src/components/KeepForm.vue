@@ -8,9 +8,9 @@
           name="name">
       </div>
       <div class="mb-3">
-        <label for="bio" class="form-label">Description:</label>
-        <input required type="text" v-model="editable.description" class="form-control" id="bio" placeholder="bio..."
-          name="bio">
+        <label for="Description" class="form-label">Description:</label>
+        <input required type="text" v-model="editable.description" class="form-control" id="Description"
+          placeholder="Description..." name="Description">
       </div>
       <div class="mb-3">
         <label for="picture" class="form-label">picture</label>
@@ -20,7 +20,7 @@
 
       <div>
         <button type="submit" class="btn btn-outline-primary fs-2" data-bs-dismiss="modal">
-          Post Changes
+          Post Keep
         </button>
       </div>
     </form>
@@ -30,7 +30,10 @@
 
 
 <script>
+import { ref } from "vue"
 import { keepsService } from "../services/keepsService.js"
+import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
 
 export default {
   setup() {
@@ -38,10 +41,16 @@ export default {
     return {
       editable,
       async handleSubmit() {
-        const newKeep = editable.value
-        await keepsService.create(newKeep)
+        try {
+          const newKeep = editable.value
+          await keepsService.createKeep(newKeep)
 
-        editable.value = {}
+          editable.value = {}
+
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
       }
     }
   }

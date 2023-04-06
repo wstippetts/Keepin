@@ -44,6 +44,11 @@ class VaultsService {
     getVaultsByProfileId(AppState.account.id)
   }
 
+  async createVault(newVault) {
+    const res = await api.post('api/vaults', newVault)
+    logger.log('[vault created in database]', res.data)
+  }
+
   // TODO go get account vaults and save into its own collection
 
 }

@@ -18,6 +18,12 @@
     <EditAccountForm />
     <!-- </template> -->
   </Modal>
+  <Modal id="newKeep">
+    <KeepForm />
+  </Modal>
+  <Modal id="newVault">
+    <VaultForm />
+  </Modal>
 </template>
 
 <script>
@@ -25,6 +31,9 @@ import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import EditAccountForm from "./components/EditAccountForm.vue"
+import KeepForm from "./components/KeepForm.vue"
+import KeepDetails from "./components/KeepDetails.vue"
+import VaultForm from "./components/VaultForm.vue"
 
 export default {
   setup() {
@@ -32,7 +41,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar, EditAccountForm }
+  components: { Navbar, EditAccountForm, KeepForm, KeepDetails, VaultForm }
 }
 </script>
 <style lang="scss">

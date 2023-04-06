@@ -8,17 +8,17 @@
           name="name">
       </div>
       <div class="mb-3">
-        <label for="bio" class="form-label">Description:</label>
-        <input required type="text" v-model="editable.description" class="form-control" id="bio" placeholder="bio..."
-          name="bio">
+        <label for="Description" class="form-label">Description:</label>
+        <input required type="text" v-model="editable.description" class="form-control" id="Description"
+          placeholder="Description..." name="Description">
       </div>
       <div class="mb-3">
         <label for="picture" class="form-label">picture</label>
         <input required type="text" v-model="editable.img" class="form-control" id="picture" placeholder="picture..."
           name="picture">
       </div>
-      <input v-model="editable.isPrivate" class="form-check-input" type="checkbox" value="" id="graduated">
-      <label class="form-check-label" for="graduated">
+      <input v-model="editable.isPrivate" class="form-check-input" type="checkbox" value="" id="isPrivate">
+      <label class="form-check-label" for="isPrivate">
         <p><b>
             Is this a private Vault?
           </b></p>
@@ -26,7 +26,7 @@
 
       <div>
         <button type="submit" class="btn btn-outline-primary fs-2" data-bs-dismiss="modal">
-          Post Changes
+          Post new Vault
         </button>
       </div>
     </form>
@@ -36,7 +36,11 @@
 
 
 <script>
-import { keepsService } from "../services/keepsService.js"
+import { ref } from "vue"
+import { vaultsService } from "../services/VaultsService.js"
+import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
+import { AppState } from "../AppState.js"
 
 export default {
   setup() {
@@ -44,10 +48,18 @@ export default {
     return {
       editable,
       async handleSubmit() {
-        const newKeep = editable.value
-        await keepsService.create(newKeep)
+        try {
 
-        editable.value = {}
+          const newVault = editable.value
+          await vaultsService.createVault(newVault)
+          editable.value = {}
+          AppState.vaults.push(newVault)
+
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
+
       }
     }
   }

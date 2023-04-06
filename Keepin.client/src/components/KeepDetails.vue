@@ -39,7 +39,7 @@
     {{ keep.description }}
     {{ keep.views }}
     <img class="" :src="keep.creator.picture" alt="">
- -->
+-->
 
   </div>
 </template>

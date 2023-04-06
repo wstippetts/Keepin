@@ -8,6 +8,7 @@
         </div> -->
         <div class="modal-body">
           <slot name="KeepDetails">Slot goodies did not load</slot>
+          <!-- <slot name="EditAccountForm">Slot goodies did not load</slot> -->
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

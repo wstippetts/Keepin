@@ -1,5 +1,5 @@
 <template>
-  <div class="component keepCard" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <div class="component keepCard">
     <router-link :to="{ name: 'VaultDetailsPage', params: { vaultId: vault.id } }">
       <img @click="setActive(vault)" class="img-fluid rounded" :src="vault.img" alt="">
     </router-link>

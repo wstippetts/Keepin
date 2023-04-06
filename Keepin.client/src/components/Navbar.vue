@@ -8,7 +8,7 @@
         <img alt="Keepr-logo" src="../assets/img/Keepr-logo.png" height="45" />
       </div>
     </router-link>
-    <CreateDropdown class="d-flex justify-content-between" />
+    <!-- <CreateDropdown class="d-flex justify-content-between" /> -->
     <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,9 +20,12 @@
             About
           </router-link>
         </li> -->
+        <li>
+          <Login />
+
+        </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
-      <Login />
     </div>
   </nav>
 </template>

@@ -5,17 +5,22 @@
       Login
     </button>
     <div v-else>
-      <div class="dropdown dropstart my-2 my-lg-0">
+      <div class="dropdown dropright my-2 my-lg-0">
         <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account.picture || user.picture">
             <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded" />
           </div>
         </div>
-        <div class="dropdown-menu dropdown-menu-lg-left p-0" aria-labelledby="authDropdown">
+        <div class="dropdown-menu dropdown-menu-lg-right p-0" aria-labelledby="authDropdown">
           <div class="list-group">
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item dropdown-item list-group-item-action">
                 My Account
+              </div>
+              <div class="list-group-item dropdown-item list-group-item-action text-primary selectable"
+                @click="editAccount">
+                <i class="mdi mdi-recycle"></i>
+                Edit Account
               </div>
             </router-link>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
@@ -43,6 +48,9 @@ export default {
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
+      },
+      async editAccount() {
+        // TODO edit account function
       }
     }
   }

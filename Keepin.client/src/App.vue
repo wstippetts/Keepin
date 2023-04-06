@@ -14,7 +14,7 @@
     </template>
   </Modal>
   <Modal>
-    <template #VaultDetails>
+    <template #EditAccountForm>
       <VaultDetails />
     </template>
   </Modal>

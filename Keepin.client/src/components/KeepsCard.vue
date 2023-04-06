@@ -1,7 +1,8 @@
 <template >
-  <div class="component keepCard" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <div class="component keepCard">
 
-    <img @click="setActive(this.keep)" class="img-fluid rounded" :src="keep?.img" alt="">
+    <img @click="setActive(this.keep)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="img-fluid rounded"
+      :src="keep?.img" alt="">
     <div class="d-flex justify-content-between">
       <h4 class="p-2 text-dark text-start textBox">{{ keep?.name }}</h4>
       <router-link :to="{ name: 'ProfileDetailsPage', params: { profileId: keep.creatorId } }">

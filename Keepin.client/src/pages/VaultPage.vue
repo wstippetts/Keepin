@@ -1,15 +1,21 @@
 <template>
   <!-- TODO add a button to remove the vault here..make sure to conditionally render -->
   <div class="component">
-    <div class="text-center">
-      <img class="vImg" :src="vault?.img" alt="">
-
+    <div class="text-center moveTrash">
+      <img class="vImg " :src="vault?.img" alt="">
+      <button v-if="account.id == vault.creatorId" @click="removeVault()"
+        class="moveTrashIn btn btn-md mdi btn-danger mdi-delete selectable">
+      </button>
     </div>
     <h1 class="m-3 p-2">Keeps</h1>
     <section v-if="keeps" class="bricks">
       <div v-for="k in keeps">
-
-        <KeepsCard :keep="k" />
+        <div>
+          <!-- <button v-if="account.id == vault.creatorId" @click="removeVaultKeep(keeps.vaultKeepId)"
+            class="btn btn-md mdi btn-danger mdi-delete selectable">
+          </button> -->
+          <KeepsCard :keep="k" />
+        </div>
       </div>
     </section>
   </div>
@@ -33,7 +39,7 @@ export default {
       try {
         const vaultId = route.params.vaultId
         const vault = await vaultsService.getVaultsById(vaultId)
-        // if (vault?.isPrivate == true && vault?.creatorId !== AppState.account.id) {
+        // if (vault?.isPrivate == true && vault?.creatorId != AppState.account.id) {
         // }
       } catch (error) {
         router.push({ name: 'Home' })
@@ -50,6 +56,9 @@ export default {
         Pop.error(error)
       }
     }
+
+
+
     // onMounted(() => {
     watchEffect(() => {
       getVaultsByProfileId()
@@ -57,7 +66,31 @@ export default {
     })
     return {
       keeps: computed(() => AppState.keeps),
-      vault: computed(() => AppState.activeVault)
+      vault: computed(() => AppState.activeVault),
+      account: computed(() => AppState.account),
+
+      async removeVaultKeep(vaultKeepId) {
+        try {
+          await vaultsService.removeVaultKeep(vaultKeepId)
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
+      },
+
+      async removeVault() {
+        try {
+          const vaultId = route.params.vaultId
+          const check = await Pop.confirm("Are you sure you want to delete this vault?")
+          if (!check) return;
+          await vaultsService.removeVault(vaultId)
+          router.push({ name: 'Home' })
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
+      }
+
     }
   }
 }
@@ -80,5 +113,17 @@ $gap: .5em;
     height: 30vh;
     object-fit: cover;
   }
+
+  .moveTrash {
+    position: relative;
+  }
+
+  .moveTrashIn {
+    position: absolute;
+    top: -75px;
+    right: -475px;
+    width: 100%;
+  }
+
 }
 </style>

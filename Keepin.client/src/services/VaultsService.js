@@ -38,6 +38,11 @@ class VaultsService {
     AppState.activeProfile = res.data
   }
 
+  async removeVault(vaultId) {
+    const res = await api.delete('api/vaults/' + vaultId)
+    logger.log('[vault removed from database]', res.data)
+    getVaultsByProfileId(AppState.account.id)
+  }
 
   // TODO go get account vaults and save into its own collection
 

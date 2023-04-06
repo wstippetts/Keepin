@@ -7,6 +7,7 @@
       <div class="">
         <img alt="Keepr-logo" src="../assets/img/Keepr-logo.png" height="45" />
       </div>
+      <CreateDropDown />
     </router-link>
     <!-- <CreateDropdown class="d-flex justify-content-between" /> -->
     <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"

@@ -26,14 +26,16 @@ import Pop from "../utils/Pop.js"
 import { useRoute } from "vue-router"
 export default {
   setup() {
+    const vaults = null
     const route = useRoute()
-    onMounted(() => {
-      // watchEffect(() => {
+    // onMounted(() => {
+    watchEffect(() => {
       // if (AppState.account.id) {
       getVaultsByProfileId()
       getKeepsByProfileId()
       // }
     })
+
     async function getKeepsByProfileId() {
       try {
         const userId = route.params.profileId
@@ -55,7 +57,7 @@ export default {
     }
     return {
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults.find(v => v.isPrivate != true)),
+      vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
 
 

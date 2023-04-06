@@ -8,6 +8,16 @@
   <!-- <footer class="bg-dark text-light">
     Made with 💖 by CodeWorks
   </footer> -->
+  <Modal>
+    <template #KeepDetails>
+      <KeepDetails />
+    </template>
+  </Modal>
+  <Modal>
+    <template #VaultDetails>
+      <VaultDetails />
+    </template>
+  </Modal>
 </template>
 
 <script>

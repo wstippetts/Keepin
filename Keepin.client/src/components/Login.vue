@@ -18,7 +18,7 @@
                 My Account
               </div>
               <div class="list-group-item dropdown-item list-group-item-action text-primary selectable"
-                @click="editAccount">
+                data-bs-toggle="modal" data-bs-target="#editAccount">
                 <i class="mdi mdi-recycle"></i>
                 Edit Account
               </div>

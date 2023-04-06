@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO add a button to remove the vault here..make sure to conditionally render -->
   <div class="component">
     <div class="text-center">
       <img class="vImg" :src="vault?.img" alt="">
@@ -32,10 +33,10 @@ export default {
       try {
         const vaultId = route.params.vaultId
         const vault = await vaultsService.getVaultsById(vaultId)
-        if (vault?.isPrivate == true && vault?.creatorId !== AppState.account.id) {
-          router.push({ name: 'Home' })
-        }
+        // if (vault?.isPrivate == true && vault?.creatorId !== AppState.account.id) {
+        // }
       } catch (error) {
+        router.push({ name: 'Home' })
         logger.error(error)
         Pop.error(error)
       }

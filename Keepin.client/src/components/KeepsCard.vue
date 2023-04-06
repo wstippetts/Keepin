@@ -1,7 +1,7 @@
 <template >
   <div class="component keepCard">
 
-    <img @click="setActive(this.keep)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="img-fluid rounded"
+    <img @click="setActive(this.keep)" data-bs-toggle="modal" data-bs-target="#keepDetails" class="img-fluid rounded"
       :src="keep?.img" alt="">
     <div class="d-flex justify-content-between">
       <h4 class="p-2 text-dark text-start textBox">{{ keep?.name }}</h4>

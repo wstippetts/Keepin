@@ -25,10 +25,12 @@
 
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { AppState } from "../AppState.js";
 import { router } from "../router.js";
 import Pop from "../utils/Pop.js";
+import { logger } from "../utils/Logger.js";
+import { accountService } from "../services/AccountService.js";
 
 
 export default {

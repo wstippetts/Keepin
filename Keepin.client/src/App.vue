@@ -8,15 +8,15 @@
   <!-- <footer class="bg-dark text-light">
     Made with 💖 by CodeWorks
   </footer> -->
-  <Modal>
-    <template #KeepDetails>
-      <KeepDetails />
-    </template>
+  <Modal id="keepDetails">
+    <!-- <template #KeepDetails> -->
+    <KeepDetails />
+    <!-- </template> -->
   </Modal>
-  <Modal>
-    <template #EditAccountForm>
-      <VaultDetails />
-    </template>
+  <Modal id="editAccount">
+    <!-- <template #EditAccountForm> -->
+    <EditAccountForm />
+    <!-- </template> -->
   </Modal>
 </template>
 
@@ -24,6 +24,7 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import EditAccountForm from "./components/EditAccountForm.vue"
 
 export default {
   setup() {
@@ -31,7 +32,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, EditAccountForm }
 }
 </script>
 <style lang="scss">

@@ -12,6 +12,9 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  // TODO write your edit account method....form is hooked up now lol
+
 }
 
 export const accountService = new AccountService()

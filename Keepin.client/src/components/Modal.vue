@@ -1,5 +1,5 @@
 <template>
-  <div class="modal modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <!-- <div class="modal-header">
@@ -7,7 +7,7 @@
           
         </div> -->
         <div class="modal-body">
-          <slot name="KeepDetails">Slot goodies did not load</slot>
+          <slot> </slot>
           <!-- <slot name="EditAccountForm">Slot goodies did not load</slot> -->
         </div>
         <!-- <div class="modal-footer">

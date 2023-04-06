@@ -30,5 +30,9 @@ class VaultsService {
     logger.log(`[vaultkeep removed from database]`, res.data)
     getKeepsByVaultId(vaultId)
   }
+
+
+  // TODO go get account vaults and save into its own collection
+
 }
 export const vaultsService = new VaultsService()

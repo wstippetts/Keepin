@@ -17,6 +17,12 @@
         <input required type="text" v-model="editable.img" class="form-control" id="picture" placeholder="picture..."
           name="picture">
       </div>
+      <input v-model="editable.isPrivate" class="form-check-input" type="checkbox" value="" id="graduated">
+      <label class="form-check-label" for="graduated">
+        <p><b>
+            Is this a private Vault?
+          </b></p>
+      </label>
 
       <div>
         <button type="submit" class="btn btn-outline-primary fs-2" data-bs-dismiss="modal">

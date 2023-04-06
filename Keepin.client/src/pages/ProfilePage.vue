@@ -36,6 +36,8 @@ export default {
       // }
     })
 
+    // TODO go get the profile so then we can render details
+
     async function getKeepsByProfileId() {
       try {
         const userId = route.params.profileId

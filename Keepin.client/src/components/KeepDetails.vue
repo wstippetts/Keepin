@@ -26,7 +26,6 @@
         </div>
         <button data-bs-dismiss="modal" aria-label="Close" v-if="account.id == keep.creatorId" @click="removeKeep(keep)"
           class="btn btn-md mdi btn-danger mdi-delete selectable">
-
         </button>
         <h1>{{ keep.name }}</h1>
         <h5>{{ keep.description }}</h5>

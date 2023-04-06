@@ -45,6 +45,22 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+  // [HttpPut]
+  // [Authorize]
+  // public async Task<ActionResult<Account>> UpdateAccount([FromBody] Account updateData, int id)
+  // {
+  //   try
+  //   {
+  //     updateData = await _accountService.Edit(updateData, updateData.Email);
+  //     // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+
+  //     return Ok(updateData);
+  //   }
+  //   catch (Exception e)
+  //   {
+  //     return BadRequest(e.Message);
+  //   }
+  // }
 
   // TODO write method for editing account; make sure to pass the correct arguments here.... refer to the editAccount in the service
 

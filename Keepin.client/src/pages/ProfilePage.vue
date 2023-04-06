@@ -2,6 +2,13 @@
   <!-- <h1>Welcome {{ account.name }}</h1>
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p> -->
+  <div class="d-flex justify-content-around">
+    <h1>{{ profile?.name }}</h1>
+  </div>
+  <div class="m-3">
+    <img :src="profile?.picture" alt="">
+
+  </div>
   <h1 class="m-3 p-2">Vault</h1>
   <section v-if="vaults" class="bricks">
     <div v-for="v in vaults">
@@ -33,8 +40,19 @@ export default {
       // if (AppState.account.id) {
       getVaultsByProfileId()
       getKeepsByProfileId()
+      getProfileData()
       // }
     })
+
+    async function getProfileData() {
+      try {
+        const profileId = route.params.profileId
+        await vaultsService.getProfileData(profileId)
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error)
+      }
+    }
 
     // TODO go get the profile so then we can render details
 
@@ -61,6 +79,7 @@ export default {
       account: computed(() => AppState.account),
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
+      profile: computed(() => AppState.activeProfile)
 
 
     }

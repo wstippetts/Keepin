@@ -48,10 +48,8 @@ export default {
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
-      },
-      async editAccount() {
-        // TODO edit account function
       }
+
     }
   }
 }

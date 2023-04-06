@@ -31,6 +31,13 @@ class VaultsService {
     getKeepsByVaultId(vaultId)
   }
 
+  async getProfileData(profileId) {
+    AppState.activeProfile = null
+    const res = await api.get('api/profiles/' + profileId)
+    logger.log('[I got da Profile from vaults service get profile data]', res.data)
+    AppState.activeProfile = res.data
+  }
+
 
   // TODO go get account vaults and save into its own collection
 

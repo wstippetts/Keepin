@@ -13,6 +13,12 @@ class AccountService {
     }
   }
 
+  async editAccount(acc) {
+    const res = await api.put('account', acc)
+    logger.log(res, 'this is the res', acc, 'this is the account passed to the edit account in account service');
+    AppState.account = new Account(res.data)
+  }
+
   // TODO write your edit account method....form is hooked up now lol
 
 }

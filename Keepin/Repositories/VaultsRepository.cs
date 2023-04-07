@@ -61,11 +61,12 @@ public class VaultsRepository
     a.*
     FROM vaultkeeps vk
     JOIN keeps k ON vk.keepId = k.id
-    JOIN accounts a ON k.creatorId = a.id
+    JOIN accounts a ON vk.creatorId = a.id
     WHERE vaultId = @vaultId;";
     return _db.Query<VKeep, Profile, VKeep>(sql, (vkeep, account) =>
     {
       vkeep.Creator = account;
+      vkeep.CreatorId = account.Id;
       return vkeep;
     }, new { vaultId }).ToList();
   }

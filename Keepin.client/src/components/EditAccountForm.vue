@@ -43,9 +43,9 @@ export default {
         try {
           await accountService.editAccount(editable.value)
           editable.value = {}
-          if (account?.id) {
-            router.push({ name: 'Account', params: { accountId: account.id } })
-          }
+
+          router.push({ name: 'Account' })
+
         } catch (error) {
           logger.error(error, 'error in edit account form')
           Pop.error(error)

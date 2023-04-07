@@ -8,7 +8,8 @@ public class AccountController : ControllerBase
   private readonly Auth0Provider _auth0Provider;
   private readonly VaultsService _vaultsService;
 
-  public AccountController(AccountService accountService, Auth0Provider auth0Provider, VaultsService vaultsService)
+
+  public AccountController(AccountService accountService, Auth0Provider auth0Provider, VaultsService vaultsService, IDbConnection db)
   {
     _accountService = accountService;
     _auth0Provider = auth0Provider;
@@ -17,6 +18,9 @@ public class AccountController : ControllerBase
 
   [HttpGet]
   [Authorize]
+
+
+
   public async Task<ActionResult<Profile>> Get()
   {
     try
@@ -45,22 +49,22 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
-  // [HttpPut]
-  // [Authorize]
-  // public async Task<ActionResult<Account>> UpdateAccount([FromBody] Account updateData, int id)
-  // {
-  //   try
-  //   {
-  //     updateData = await _accountService.Edit(updateData, updateData.Email);
-  //     // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 
-  //     return Ok(updateData);
-  //   }
-  //   catch (Exception e)
-  //   {
-  //     return BadRequest(e.Message);
-  //   }
-  // }
+  [HttpPut]
+  [Authorize]
+  public async Task<ActionResult<Profile>> Edit([FromBody] Profile editData)
+  {
+    try
+    {
+      Profile original = await _auth0Provider.GetUserInfoAsync<Profile>(HttpContext);
+      Profile newAccount = _accountService.Edit(editData, original);
+      return Ok(newAccount);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
 
   // TODO write method for editing account; make sure to pass the correct arguments here.... refer to the editAccount in the service
 

@@ -32,16 +32,18 @@ public class AccountsRepository
     return newAccount;
   }
 
-  internal Profile Edit(Profile update)
+  internal void Edit(Profile original)
   {
     string sql = @"
-            UPDATE accounts
-            SET 
-              name = @Name,
-              picture = @Picture
-            WHERE id = @Id;";
-    _db.Execute(sql, update);
-    return update;
+    UPDATE accounts
+    SET
+    name = @Name,
+    picture = @Picture
+    WHERE id = @Id;
+    ";
+
+    _db.Execute(sql, original);
+
   }
 }
 

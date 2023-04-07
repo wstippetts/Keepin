@@ -11,9 +11,9 @@
     <section v-if="keeps" class="bricks">
       <div v-for="k in keeps">
         <div>
-          <!-- <button v-if="account.id == vault.creatorId" @click="removeVaultKeep(keeps.vaultKeepId)"
-            class="btn btn-md mdi btn-danger mdi-delete selectable">
-          </button> -->
+          <button v-if="account.id == vault?.creatorId && account.id == k?.creatorId"
+            @click="removeVaultKeep(k.vaultKeepId)" class="btn btn-md mdi btn-danger mdi-delete selectable">
+          </button>
           <KeepsCard :keep="k" />
         </div>
       </div>
@@ -59,11 +59,13 @@ export default {
 
 
 
-    // onMounted(() => {
-    watchEffect(() => {
-      getVaultsByProfileId()
+    onMounted(() => {
       getKeepsByVaultId()
-    })
+    }),
+      watchEffect(() => {
+        getVaultsByProfileId()
+        getKeepsByVaultId()
+      })
     return {
       keeps: computed(() => AppState.keeps),
       vault: computed(() => AppState.activeVault),

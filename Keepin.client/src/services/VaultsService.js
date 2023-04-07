@@ -1,6 +1,7 @@
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 import { AppState } from "../AppState.js"
+import { router } from "../router.js"
 
 class VaultsService {
 
@@ -19,7 +20,7 @@ class VaultsService {
     AppState.activeVault = res.data
   }
   async getKeepsByVaultId(vaultId) {
-    AppState.keeps = null
+    // AppState.keeps = null
     const res = await api.get('api/vaults/' + vaultId + '/keeps')
     logger.log('[I got da KEEPS- vault service get keeps by vault id]', res.data)
     AppState.keeps = res.data
@@ -28,7 +29,7 @@ class VaultsService {
   async removeVaultKeep(vaultKeepId, vaultId) {
     const res = await api.delete('api/vaultkeeps/' + vaultKeepId)
     logger.log(`[vaultkeep removed from database]`, res.data)
-    getKeepsByVaultId(vaultId)
+    this.getKeepsByVaultId(vaultId)
   }
 
   async getProfileData(profileId) {
@@ -40,6 +41,7 @@ class VaultsService {
 
   async removeVault(vaultId) {
     const res = await api.delete('api/vaults/' + vaultId)
+    router.push({ name: 'Home' })
     logger.log('[vault removed from database]', res.data)
     getVaultsByProfileId(AppState.account.id)
   }

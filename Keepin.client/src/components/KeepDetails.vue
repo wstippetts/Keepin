@@ -16,9 +16,9 @@
         </div>
         <div class="d-flex justify-content-center">
           <i class="px-5 py-2">
-            <button>
-              <img src="../assets/img/ViewImg.png" alt="">
-            </button>
+
+            <img src="../assets/img/ViewImg.png" alt="">
+
             {{ keep?.views }}
           </i>
           <i class="px-5 py-2">
@@ -26,9 +26,15 @@
             {{ keep?.kept }}
           </i>
         </div>
+
         <button data-bs-dismiss="modal" aria-label="Close" v-if="account.id == keep?.creatorId" @click="removeKeep(keep)"
           class="btn btn-md mdi btn-danger mdi-delete selectable">
         </button>
+
+        <!-- <button v-if="account.id == vault?.creatorId && account.id == keep?.creator?.id" data-bs-dismiss="modal"
+          aria-label="Close" @click="removeKeep(keep)" class="btn btn-md mdi btn-danger mdi-delete selectable">
+        </button> -->
+
         <h1>{{ keep?.name }}</h1>
         <h5>{{ keep?.description }}</h5>
         <div>
@@ -83,6 +89,7 @@ export default {
       editable,
       // myVaults: AppState.myVaults,
       keep: computed(() => AppState.activeKeep),
+      vault: computed(() => AppState.activeVault),
       account: computed(() => AppState.account),
       myVaults: computed(() => AppState.myVaults),
       myVaultNames: computed(() => {
@@ -103,8 +110,10 @@ export default {
       },
       async handleSubmit() {
         try {
-          const kept = editable.value
-          await keepsService.addKeepToVault(kept)
+          const vaultName = editable.value.name
+          const vault = AppState.myVaults.find(v => v.name == vaultName)
+          const keepId = AppState.activeKeep.id
+          await keepsService.addKeepToVault(vault.id, keepId)
         } catch (error) {
           logger.error(error)
           Pop.error(error)

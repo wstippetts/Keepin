@@ -24,11 +24,12 @@ public class AccountService
     return profile;
   }
 
-  internal Profile Edit(Profile editData, string userEmail)
+  internal Profile Edit(Profile editData, Profile original)
   {
-    Profile original = GetProfileByEmail(userEmail);
-    original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
-    original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
-    return _repo.Edit(original);
+    original.Name = editData.Name != null ? editData.Name : original.Name;
+    original.Picture = editData.Picture != null ? editData.Picture : original.Picture;
+
+    _repo.Edit(original);
+    return original;
   }
 }
